@@ -1,12 +1,12 @@
 # Interview Plan Implement Review Loop
 
-要件の確認から実装とレビューまでを進める Codex スキルです。リポジトリを調べてから判断が必要な点を一問ずつ確認し、計画ファイルを作成します。ユーザーの承認後に、実装とレビューを別々のサブエージェントに割り当て、修正が必要な指摘を解消するまで続けます。
+This Codex skill guides a repository change from requirements through implementation and review. Codex inspects the repository, asks one question at a time about decisions that need your input, and writes a plan. Once you approve the plan, separate subagents implement and review the change. They repeat the cycle until all blocking findings are resolved.
 
-たとえば検索結果の CSV 出力を追加するときは、全件を出力するか、表示中のページだけを出力するかを先に確認し、決まった方針を計画に記録します。レビューではコミット範囲を指定し、修正のたびに差分を確認したうえで、最後に変更全体を確認します。
+For example, when adding CSV export for search results, Codex asks whether to export all results or just the current page and records your decision in the plan. Each follow-up review checks the changes since the previous checkpoint. The final review covers the full commit range.
 
-## インストール
+## Installation
 
-サブエージェントを利用できる Codex と、作業途中のコミットを作成できる Git リポジトリが必要です。自分の Codex 環境にインストールするには、以下を実行します。
+You need Codex with subagent support and a Git repository where you can create checkpoint commits. To install the skill for your user account, run the following commands.
 
 ```sh
 mkdir -p "$HOME/.agents/skills"
@@ -14,14 +14,14 @@ git clone https://github.com/juninaba/interview-plan-implement-review-loop.git \
   "$HOME/.agents/skills/interview-plan-implement-review-loop"
 ```
 
-スキルが一覧に表示されない場合は Codex を再起動してください。[OpenAI Docs のスキルガイド](https://learn.chatgpt.com/docs/build-skills)
+If the skill doesn't appear in the skill list, restart Codex. [OpenAI guide to skills](https://learn.chatgpt.com/docs/build-skills)
 
-## 使い方
+## Usage
 
-対象のリポジトリで Codex を開き、依頼にスキル名を添えます。
+Open Codex in the repository you want to work on and include the skill name in your request.
 
 ```text
-$interview-plan-implement-review-loop を使って、検索結果を CSV に出力する機能を実装してください。
+Use $interview-plan-implement-review-loop to add CSV export for search results.
 ```
 
-計画の保存先と検証コマンドは、作業対象のリポジトリのルールに従います。計画の保存先に指定がなければ、`docs/plans/plan_YYYYMMDDHHMMSS.md` に作成します。ワークフローの詳細は [SKILL.md](SKILL.md) を参照してください。
+The plan location and validation commands follow the target repository's conventions. The default plan location is `docs/plans/plan_YYYYMMDDHHMMSS.md`. For the full workflow, see [SKILL.md](SKILL.md).
